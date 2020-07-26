@@ -4,13 +4,24 @@ import blogService from './services/blogs';
 import userService from './services/users';
 import LoggedIn from './components/LoggedIn';
 import LoginForm from './components/LoginForm';
+import Toast from './components/Toast';
 
 const storageKey = 'user';
+let timeoutId;
 
 const App = () => {
     const [user, setUser] = useState(JSON.parse(window.localStorage.getItem(storageKey) || null));
     const [blogs, setBlogs] = useState([]);
+    const [msg, setMsg] = useState('');
+    const [cls, setCls] = useState('');
+    const setToast = (text, type) => {
+        setMsg(text);
+        setCls(type);
 
+        if (timeoutId) clearTimeout(timeoutId);
+
+        timeoutId = setTimeout(() => setMsg(''), 5000);
+    };
     const logIn = (event) => {
         const credentials = Object.fromEntries(new FormData(event.target).entries());
 
@@ -19,24 +30,41 @@ const App = () => {
             .then((userData) => {
                 setUser(userData);
                 window.localStorage.setItem(storageKey, JSON.stringify(userData));
+                setToast(`Welcome ${userData.username}`, 'success');
             })
             .catch((error) => {
                 if (error.response) {
-                    console.log(error.response.data);
+                    setToast(error.response.data.error, 'error');
                 }
-            }); // TODO notify user of error
+            });
 
         event.preventDefault();
     };
     const logOut = () => {
         window.localStorage.removeItem(storageKey);
         setUser(null);
+        setToast(`Logged out`, 'success');
+    };
+    const addBlog = (event) => {
+        const newBlog = Object.fromEntries(new FormData(event.target).entries());
+        blogService
+            .addOne(newBlog, user.token)
+            .then(response => {
+                setBlogs([...blogs, response]);
+                setToast(`Added ${newBlog.title} by ${newBlog.author}`, 'success');
+            })
+            .catch((error) => {
+                if (error.response) {
+                    setToast(error.response.data.error, 'error');
+                }
+            });
+        event.preventDefault();
     };
 
     useEffect(() => {
         if (user) {
-            blogService // TODO returns all blogs and not just the user's
-                .getUserBlogs(user)
+            blogService
+                .getAll()
                 .then(response => {
                     setBlogs(response);
                 });
@@ -44,7 +72,12 @@ const App = () => {
     }, [user]);
 
     return (<>
-        {(!user && <LoginForm logIn={logIn} />) || <LoggedIn username={user.username} logOut={logOut} blogs={blogs} />}
+        <Toast msg={msg} cls={cls} />
+        {(!user && <LoginForm logIn={logIn} />) || <LoggedIn
+            user={user}
+            logOut={logOut}
+            blogs={blogs}
+            addBlog={addBlog} />}
     </>);
 };
 
