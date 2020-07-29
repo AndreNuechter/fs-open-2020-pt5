@@ -1,7 +1,7 @@
 import React from 'react';
 import Blog from './Blog';
 
-const BlogsList = ({ blogs }) => <>
+export default ({ blogs }) => <>
     <h2>Blogs</h2>
     <ul>
         {blogs.map(blog =>
@@ -9,5 +9,3 @@ const BlogsList = ({ blogs }) => <>
         )}
     </ul>
 </>;
-
-export default BlogsList;

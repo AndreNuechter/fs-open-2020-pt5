@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import blogService from './services/blogs';
 import userService from './services/users';
 import LoggedIn from './components/LoggedIn';
@@ -9,11 +9,12 @@ import Toast from './components/Toast';
 const storageKey = 'user';
 let timeoutId;
 
-const App = () => {
+export default () => {
     const [user, setUser] = useState(JSON.parse(window.localStorage.getItem(storageKey) || null));
     const [blogs, setBlogs] = useState([]);
     const [msg, setMsg] = useState('');
     const [cls, setCls] = useState('');
+    const blogCreationFormRef = useRef();
     const setToast = (text, type) => {
         setMsg(text);
         setCls(type);
@@ -47,6 +48,7 @@ const App = () => {
     };
     const addBlog = (event) => {
         const newBlog = Object.fromEntries(new FormData(event.target).entries());
+        blogCreationFormRef.current.toggleVisibility();
         blogService
             .addOne(newBlog, user.token)
             .then(response => {
@@ -71,14 +73,13 @@ const App = () => {
         }
     }, [user]);
 
-    return (<>
+    return <>
         <Toast msg={msg} cls={cls} />
         {(!user && <LoginForm logIn={logIn} />) || <LoggedIn
+            getRef={() => blogCreationFormRef}
             user={user}
-            logOut={logOut}
             blogs={blogs}
+            logOut={logOut}
             addBlog={addBlog} />}
-    </>);
+    </>;
 };
-
-export default App;

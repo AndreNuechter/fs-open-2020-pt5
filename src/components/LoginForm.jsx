@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LoginForm = ({ logIn }) => <form onSubmit={logIn}>
+export default ({ logIn }) => <form onSubmit={logIn}>
     <h2>Login</h2>
     <label>
         <span>Username:</span>
@@ -12,5 +12,3 @@ const LoginForm = ({ logIn }) => <form onSubmit={logIn}>
     </label>
     <button>Log In</button>
 </form>;
-
-export default LoginForm;

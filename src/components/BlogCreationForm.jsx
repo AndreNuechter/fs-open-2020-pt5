@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BlogCreationForm = ({ addBlog }) => <form onSubmit={addBlog}>
+export default ({ addBlog }) => <form onSubmit={addBlog}>
     <h2>Add new Blog</h2>
     <label>
         <span>Title:</span>
@@ -20,5 +20,3 @@ const BlogCreationForm = ({ addBlog }) => <form onSubmit={addBlog}>
     </label>
     <button>Add Blog</button>
 </form>;
-
-export default BlogCreationForm;
