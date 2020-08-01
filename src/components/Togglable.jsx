@@ -1,6 +1,6 @@
 import React, { useState, useImperativeHandle } from 'react';
 
-export default React.forwardRef(({ children, label }, ref) => {
+export default React.forwardRef(({ children, labelOpen = 'Show', labelClose = 'Cancel' }, ref) => {
     const [visible, setVisible] = useState(false);
     const toggleVisibility = () => setVisible(!visible);
 
@@ -8,6 +8,6 @@ export default React.forwardRef(({ children, label }, ref) => {
 
     return <>
         {visible && children}
-        <button onClick={toggleVisibility}>{visible ? 'Cancel' : label}</button>
+        <button onClick={toggleVisibility}>{visible ? labelClose : labelOpen}</button>
     </>;
 });

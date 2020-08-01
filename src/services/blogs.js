@@ -7,5 +7,8 @@ const getAll = () => axios
 const addOne = (newBlog, token) => axios
     .post(baseUrl, newBlog, { headers: { Authorization: `bearer ${token}` } })
     .then(response => response.data);
+const like = id => axios
+    .put(`${baseUrl}/${id}`)
+    .then(response => response.data);
 
-export default { getAll, addOne };
+export default { getAll, addOne, like };

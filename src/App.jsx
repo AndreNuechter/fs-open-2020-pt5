@@ -62,6 +62,23 @@ export default () => {
             });
         event.preventDefault();
     };
+    const likeBlog = ({ target }) => {
+        const { id } = target.parentElement.dataset;
+        // TODO more effectively prevent multiple likes by the same person
+        target.disabled = true;
+        blogService
+            .like(id)
+            .then(() => {
+                blogs.find(b => b.id === id).likes += 1;
+                setBlogs(blogs);
+                setToast('Liked', 'success');
+            })
+            .catch((error) => {
+                if (error.response) {
+                    setToast(error.response.data.error, 'error');
+                }
+            });
+    };
 
     useEffect(() => {
         if (user) {
@@ -80,6 +97,7 @@ export default () => {
             user={user}
             blogs={blogs}
             logOut={logOut}
-            addBlog={addBlog} />}
+            addBlog={addBlog}
+            likeBlog={likeBlog} />}
     </>;
 };

@@ -22,10 +22,35 @@ label {
 
 .error {
     border: 1px solid red;
-    background: rgba(255, 0, 0, 0.4);
+    background: rgba(255, 0, 0, 0.8);
 }
 
 .success {
     border: 1px solid green;
-    background: rgba(0, 255, 0, 0.4);
+    background: rgba(0, 255, 0, 0.8);
+}
+
+.blogs-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.blog {
+    border: 1px solid black;
+    padding: 4px 8px;
+    margin-top: 4px;
+}
+
+.blog a {
+    display: block;
+}
+
+.blog button {
+    display: inline;
+}
+
+.blog__details {
+    display: flex;
+    justify-content: space-between;
+    width: 8rem;
 }
