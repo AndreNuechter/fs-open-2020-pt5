@@ -10,7 +10,7 @@ const storageKey = 'user';
 let timeoutId;
 
 export default () => {
-    const [user, setUser] = useState(JSON.parse(window.localStorage.getItem(storageKey) || null));
+    const [user, setUser] = useState(JSON.parse(window.localStorage.getItem(storageKey)));
     const [blogs, setBlogs] = useState([]);
     const [msg, setMsg] = useState('');
     const [cls, setCls] = useState('');
@@ -18,14 +18,11 @@ export default () => {
     const setToast = (text, type) => {
         setMsg(text);
         setCls(type);
-
-        if (timeoutId) clearTimeout(timeoutId);
-
-        timeoutId = setTimeout(() => setMsg(''), 5000);
+        if (timeoutId) window.clearTimeout(timeoutId);
+        timeoutId = window.setTimeout(() => setMsg(''), 5000);
     };
     const logIn = (event) => {
         const credentials = Object.fromEntries(new FormData(event.target).entries());
-
         userService
             .logIn(credentials)
             .then((userData) => {
@@ -63,7 +60,7 @@ export default () => {
         event.preventDefault();
     };
     const likeBlog = ({ target }) => {
-        const { id } = target.parentElement.dataset;
+        const { id } = target.closest('.blog').dataset;
         // TODO more effectively prevent multiple likes by the same person
         target.disabled = true;
         blogService
@@ -72,6 +69,20 @@ export default () => {
                 blogs.find(b => b.id === id).likes += 1;
                 setBlogs(blogs);
                 setToast('Liked', 'success');
+            })
+            .catch((error) => {
+                if (error.response) {
+                    setToast(error.response.data.error, 'error');
+                }
+            });
+    };
+    const deleteBlog = ({ target }) => {
+        const { id } = target.closest('.blog').dataset;
+        if (window.confirm('Delete Blog?')) blogService
+            .deleteBlog(id, user.token)
+            .then(() => {
+                setBlogs(blogs.filter(b => b.id !== id));
+                setToast('Blog deleted', 'success');
             })
             .catch((error) => {
                 if (error.response) {
@@ -98,6 +109,7 @@ export default () => {
             blogs={blogs}
             logOut={logOut}
             addBlog={addBlog}
-            likeBlog={likeBlog} />}
+            likeBlog={likeBlog}
+            deleteBlog={deleteBlog} />}
     </>;
 };

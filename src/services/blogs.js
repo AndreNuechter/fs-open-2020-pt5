@@ -10,5 +10,8 @@ const addOne = (newBlog, token) => axios
 const like = id => axios
     .put(`${baseUrl}/${id}`)
     .then(response => response.data);
+const deleteBlog = (id, token) => axios
+    .delete(`${baseUrl}/${id}`, { headers: { Authorization: `bearer ${token}` } })
+    .then(response => response.data);
 
-export default { getAll, addOne, like };
+export default { getAll, addOne, like, deleteBlog };
