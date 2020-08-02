@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default ({ logIn }) => <form onSubmit={logIn}>
+const LoginForm = ({ logIn }) => <form onSubmit={logIn}>
     <h2>Login</h2>
     <label>
         <span>Username:</span>
@@ -12,3 +13,9 @@ export default ({ logIn }) => <form onSubmit={logIn}>
     </label>
     <button>Log In</button>
 </form>;
+
+LoginForm.propTypes = {
+    logIn: PropTypes.func.isRequired
+};
+
+export default LoginForm;

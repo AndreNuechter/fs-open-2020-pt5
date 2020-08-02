@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default ({ addBlog }) => <form onSubmit={addBlog}>
+const BlogCreationForm = ({ addBlog }) => <form onSubmit={addBlog}>
     <h2>Add new Blog</h2>
     <label>
         <span>Title:</span>
@@ -20,3 +21,9 @@ export default ({ addBlog }) => <form onSubmit={addBlog}>
     </label>
     <button>Add Blog</button>
 </form>;
+
+BlogCreationForm.propTypes = {
+    addBlog: PropTypes.func.isRequired
+};
+
+export default BlogCreationForm;

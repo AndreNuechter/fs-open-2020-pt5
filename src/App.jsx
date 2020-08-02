@@ -9,7 +9,7 @@ import Toast from './components/Toast';
 const storageKey = 'user';
 let timeoutId;
 
-export default () => {
+const App = () => {
     const [user, setUser] = useState(JSON.parse(window.localStorage.getItem(storageKey)));
     const [blogs, setBlogs] = useState([]);
     const [msg, setMsg] = useState('');
@@ -41,7 +41,7 @@ export default () => {
     const logOut = () => {
         window.localStorage.removeItem(storageKey);
         setUser(null);
-        setToast(`Logged out`, 'success');
+        setToast('Logged out', 'success');
     };
     const addBlog = (event) => {
         const newBlog = Object.fromEntries(new FormData(event.target).entries());
@@ -113,3 +113,7 @@ export default () => {
             deleteBlog={deleteBlog} />}
     </>;
 };
+
+App.displayName = 'App';
+
+export default App;

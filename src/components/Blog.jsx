@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Togglable from './Togglable';
 
-export default ({ user, blog, likeBlog, deleteBlog }) => <li className="blog" data-id={blog.id}>
+const Blog = ({ user, blog, likeBlog, deleteBlog }) => <li className="blog" data-id={blog.id}>
     <a href={blog.url}>"{blog.title}" by {blog.author || 'Anonymous'}</a>
     <Togglable labelOpen="Show details" labelClose="Hide details">
         <div className="blog__details">
@@ -16,3 +17,12 @@ export default ({ user, blog, likeBlog, deleteBlog }) => <li className="blog" da
         </div>
     </Togglable>
 </li>;
+
+Blog.propTypes = {
+    user: PropTypes.object.isRequired,
+    blog: PropTypes.object.isRequired,
+    likeBlog: PropTypes.func.isRequired,
+    deleteBlog: PropTypes.func.isRequired
+};
+
+export default Blog;
