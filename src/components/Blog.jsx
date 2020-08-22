@@ -6,9 +6,12 @@ const Blog = ({ user, blog, likeBlog, deleteBlog }) => <li className="blog" data
     <a href={blog.url}>"{blog.title}" by {blog.author || 'Anonymous'}</a>
     <Togglable labelOpen="Show details" labelClose="Hide details">
         <div className="blog__details">
+            <div className="blog__url-string">
+                <span>{blog.url}</span>
+            </div>
             <div className="blog__likes">
                 <span>Liked by {blog.likes}</span>
-                <button onClick={likeBlog}>Like</button>
+                <button className="blog__like-btn" onClick={likeBlog}>Like</button>
             </div>
             {blog.user && <div className="blog__user-details">
                 Submitted by {blog.user.username}

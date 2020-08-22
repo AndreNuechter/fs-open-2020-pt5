@@ -9,7 +9,7 @@ const Togglable = React.forwardRef(({ children, labelOpen = 'Show', labelClose =
 
     return <>
         {visible && children}
-        <button onClick={toggleVisibility}>{visible ? labelClose : labelOpen}</button>
+        <button className="toggle-visibility-btn" onClick={toggleVisibility}>{visible ? labelClose : labelOpen}</button>
     </>;
 });
 

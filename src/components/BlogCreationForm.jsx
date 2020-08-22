@@ -19,7 +19,7 @@ const BlogCreationForm = ({ addBlog }) => <form onSubmit={addBlog}>
         <span>URL:</span>
         <input name="url" />
     </label>
-    <button>Add Blog</button>
+    <button className="blog-creation__submit-btn">Add Blog</button>
 </form>;
 
 BlogCreationForm.propTypes = {
