@@ -15,7 +15,7 @@ const Blog = ({ user, blog, likeBlog, deleteBlog }) => <li className="blog" data
             </div>
             {blog.user && <div className="blog__user-details">
                 Submitted by {blog.user.username}
-                {blog.user.username === user.username && <button onClick={deleteBlog}>Delete blog</button>}
+                {blog.user.username === user.username && <button className="blog__deletion-btn" onClick={deleteBlog}>Delete blog</button>}
             </div>}
         </div>
     </Togglable>

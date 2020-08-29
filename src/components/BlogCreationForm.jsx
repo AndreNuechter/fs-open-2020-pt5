@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const BlogCreationForm = ({ addBlog }) => <form onSubmit={addBlog}>
+const BlogCreationForm = ({ addBlog }) => <form onSubmit={addBlog} className="blog-creation-form">
     <h2>Add new Blog</h2>
     <label>
         <span>Title:</span>
@@ -19,7 +19,7 @@ const BlogCreationForm = ({ addBlog }) => <form onSubmit={addBlog}>
         <span>URL:</span>
         <input name="url" />
     </label>
-    <button className="blog-creation__submit-btn">Add Blog</button>
+    <button className="blog-creation-form__submit-btn">Add Blog</button>
 </form>;
 
 BlogCreationForm.propTypes = {
