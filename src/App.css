@@ -22,12 +22,12 @@ label {
 
 .error {
     border: 1px solid red;
-    background: rgba(255, 0, 0, 0.8);
+    background-color: rgba(255, 0, 0, 0.8);
 }
 
 .success {
     border: 1px solid green;
-    background: rgba(0, 255, 0, 0.8);
+    background-color: rgba(0, 255, 0, 0.8);
 }
 
 .blogs-list {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const LoginForm = ({ logIn }) => <form onSubmit={logIn}>
+const LoginForm = ({ logIn }) => <form onSubmit={logIn} className="login-form">
     <h2>Login</h2>
     <label>
         <span>Username:</span>
@@ -11,7 +11,7 @@ const LoginForm = ({ logIn }) => <form onSubmit={logIn}>
         <span>Password:</span>
         <input name="password" type="password" />
     </label>
-    <button>Log In</button>
+    <button className="login-form__submit-btn">Log In</button>
 </form>;
 
 LoginForm.propTypes = {
