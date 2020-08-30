@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Togglable from './Togglable';
 
-const Blog = ({ user, blog, likeBlog, deleteBlog }) => <li className="blog" data-id={blog.id}>
+const Blog = ({ user, blog, likeBlog, deleteBlog }) => <li className="blog" data-id={blog.id} data-likes={blog.likes}>
     <a href={blog.url}>"{blog.title}" by {blog.author || 'Anonymous'}</a>
     <Togglable labelOpen="Show details" labelClose="Hide details">
         <div className="blog__details">

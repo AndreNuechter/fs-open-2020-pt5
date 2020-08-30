@@ -26,13 +26,9 @@ describe('Blog app...', function() {
         cy.get('.success');
     });
 
-    describe('When logged in, ...', () => {
+    describe('When logged in...', () => {
         beforeEach(() => {
-            cy.request('POST', 'http://localhost:3001/api/login', testUser)
-                .then(response => {
-                    localStorage.setItem('user', JSON.stringify(response.body));
-                    cy.visit('http://localhost:3000');
-                });
+            cy.login(testUser);
         });
 
         it('the login form is not visible', () => {
@@ -54,13 +50,9 @@ describe('Blog app...', function() {
             cy.get('.blogs-list').children().contains(testBlog.title);
         });
 
-        describe('when there is a blog in the blogs list', () => {
+        describe('and there\'s a blog in the blogs list...', () => {
             beforeEach(() => {
-                cy.contains('Create Blog').click();
-                Object.keys(testBlog).forEach(key => {
-                    cy.get(`[name="${key}"]`).type(testBlog[key]);
-                });
-                cy.get('.blog-creation-form__submit-btn').click();
+                cy.addBlog(testBlog);
             });
 
             it('the user can like it', () => {
@@ -84,6 +76,23 @@ describe('Blog app...', function() {
                         cy.visit('http://localhost:3000');
                         cy.contains('Show details').click();
                         cy.get('.blog__deletion-btn').should('not.be.visible');
+                    });
+            });
+        });
+
+        describe('and there\'re multiple blogs...', () => {
+            beforeEach(() => {
+                cy.addBlog(testBlog);
+                cy.addBlog(Object.assign({}, testBlog, { likes: testBlog.likes + 1 }));
+                cy.addBlog(Object.assign({}, testBlog, { likes: testBlog.likes + 2 }));
+            });
+
+            it('they\'re ordered based on the number of their likes', () => {
+                cy.get('.blogs-list').children();
+                cy.get('.blogs-list')
+                    .then((list) => {
+                        const likes = [...list[0].children].map(c => +c.dataset.likes);
+                        expect(likes).to.eql(likes.slice().sort((a, b) => b - a));
                     });
             });
         });
